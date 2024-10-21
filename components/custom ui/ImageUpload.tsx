@@ -1,5 +1,5 @@
-import { CldUploadWidget } from 'next-cloudinary';
-import { Plus } from 'lucide-react';
+import { CldUploadWidget } from "next-cloudinary";
+import { Plus, Trash } from "lucide-react";
 
 import { Button } from '../ui/button';
 
