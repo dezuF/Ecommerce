@@ -19,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../ui/textarea"
 import ImageUpload from "../custom ui/ImageUpload"
+import { useRouter } from "next/router"
 
 const formSchema = z.object({
   title: z.string().min(2).max(20),
@@ -26,6 +27,7 @@ const formSchema = z.object({
   image: z.string(),
 });
 const CollectionForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -85,7 +87,10 @@ const CollectionForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <div className="flex gap-10">
+          <Button type="submit" className="bg-blue-1 text-white">Submit</Button>
+          <Button type="button" onClick={() => router.push("/collections")} className="bg-blue-1 text-white">Discard</Button>
+          </div>
         </form>
       </Form>
     </div>
