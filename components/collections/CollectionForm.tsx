@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../ui/textarea"
 import ImageUpload from "../custom ui/ImageUpload"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   title: z.string().min(2).max(20),
@@ -35,7 +35,7 @@ const CollectionForm = () => {
       description: "",
       image: "",
     },
-  })
+  });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values)
