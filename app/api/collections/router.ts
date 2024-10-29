@@ -1,5 +1,5 @@
 import { connectToDB } from "@/lib/mongoDB";
-import { auth } from "@clerk/nextjs";
+import { auth } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from "next/server";
 
 import Collection from "@/lib/models/Collection";
@@ -37,6 +37,18 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(newCollection, { status: 200 })
   } catch (err) {
     console.log("[collections_POST]", err)
+    return new NextResponse("Internal Server Error", { status: 500 })
+  }
+}
+export const GET = async (req: NextRequest) => {
+  try {
+    await connectToDB()
+
+    const collections = await Collection.find().sort({ createdAt: "desc" })
+
+    return NextResponse.json(collections, { status: 200 })
+  } catch (err) {
+    console.log("[collections_GET]", err)
     return new NextResponse("Internal Server Error", { status: 500 })
   }
 }
