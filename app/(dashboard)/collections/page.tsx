@@ -1,3 +1,4 @@
+"use client"
 import { useEffect, useState } from "react"
 
 const Collections = () => {
@@ -13,13 +14,13 @@ const Collections = () => {
             setCollections(data)
             setLoading(false)
         } catch (err) {
-            console.log("[collectionId_GET]", err)
+            console.log("[collections_GET]", err)
         }
     };
     useEffect(() => {
         getCollections();
       }, []);
-    console.log(Collections)
+      console.log(collections)
     return (
         <div>Collections</div>
     )
