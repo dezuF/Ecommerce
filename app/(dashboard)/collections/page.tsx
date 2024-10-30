@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react"
+
 const Collections = () => {
     const [loading, setLoading] = useState(true)
-    const [collectionDetails, setCollectionDetails] = useState([])
+    const [collections, setCollections] = useState([])
 
-    const getCollectionDetails = async () => {
+    const getCollections = async () => {
         try {
             const res = await fetch("/api/collections", {
                 method: "GET"
             })
             const data = await res.json()
-            setCollectionDetails(data)
+            setCollections(data)
             setLoading(false)
         } catch (err) {
             console.log("[collectionId_GET]", err)
         }
-    }
-    useEffect{() => {
-        getCollectionDetails()
-    },[]}
+    };
+    useEffect(() => {
+        getCollections();
+      }, []);
     console.log(Collections)
     return (
         <div>Collections</div>
