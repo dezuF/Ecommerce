@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import { useState } from 'react'
 import { Button } from '../ui/button'
 import { Trash } from 'lucide-react'
 
@@ -15,8 +15,25 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import toast from 'react-hot-toast'
+interface DeleteProps{
+  id: string;
+}
 
-const Delete = () => {
+const Delete: React.FC<DeleteProps>= ({id}) => {
+  const [loading, setLoading] = useState(false);
+
+  const onDelete = async () => {
+    try {
+      setLoading(true)
+      const res = await fetch('/api/collections/${id}',{
+        method: "DELETE",
+      })
+    } catch (err) {
+      console.log (err)
+      toast.error("Something went wrong. Please try again.")
+    }
+  }
   return (
     <AlertDialog>
       <AlertDialogTrigger>
