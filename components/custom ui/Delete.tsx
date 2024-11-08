@@ -16,21 +16,26 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import toast from 'react-hot-toast'
-interface DeleteProps{
+interface DeleteProps {
   id: string;
 }
 
-const Delete: React.FC<DeleteProps>= ({id}) => {
+const Delete: React.FC<DeleteProps> = ({ id }) => {
   const [loading, setLoading] = useState(false);
 
   const onDelete = async () => {
     try {
       setLoading(true)
-      const res = await fetch('/api/collections/${id}',{
+      const res = await fetch('/api/collections/${id}', {
         method: "DELETE",
       })
+      if (res.ok) {
+        setLoading(false)
+        window.location.href = ("/collections")
+        toast.success("collection deleted")
+      }
     } catch (err) {
-      console.log (err)
+      console.log(err)
       toast.error("Something went wrong. Please try again.")
     }
   }
@@ -51,7 +56,7 @@ const Delete: React.FC<DeleteProps>= ({id}) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className='bg-red-1 text'>Continue</AlertDialogAction>
+          <AlertDialogAction className="bg-red-1 text-white" onClick = {onDelete}>Delete</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
