@@ -3,9 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { useRouter } from "next/navigation"
 
 import { Separator } from "../ui/separator"
-
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -19,7 +19,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../ui/textarea"
 import ImageUpload from "../custom ui/ImageUpload"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 import toast from "react-hot-toast"
 
@@ -28,12 +27,19 @@ const formSchema = z.object({
   description: z.string().min(2).max(500).trim(),
   image: z.string(),
 });
-const CollectionForm = () => {
+
+interface CollectionFormProps {
+  initialData?: CollectionType | null; //Must have "?" to make it optional
+}
+
+const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
   const router = useRouter();
+
   const [loading, setloading] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: initialData ? initialData : {
       title: "",
       description: "",
       image: "",
@@ -43,13 +49,15 @@ const CollectionForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setloading(true);
-      const res=await fetch("/api/collections", {
+      const url = initialData ? '/api/collections/${initialData._id}' : "/api/collections";
+      const res=await fetch(url, {
         method: "POST",
         body: JSON.stringify(values),
       });
       if (res.ok){
         setloading(false);
-        toast.success("Collection created");
+        toast.success('Collection ${initialData ? "updated" : "created"}');
+        window.location.href = "/collections";
         router.push("/collections");
       }
     } catch (err){
@@ -114,4 +122,4 @@ const CollectionForm = () => {
   )
 };
 
-export default CollectionForm
+export default CollectionForm;
