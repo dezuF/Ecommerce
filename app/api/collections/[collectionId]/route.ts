@@ -44,6 +44,11 @@ export const POST = async (req: NextRequest, { params }: { params: { collectionI
     }
 
     collection = await Collection.findByIdAndUpdate(params.collectionId, {title,description, image}, {new: true })
+
+    await collection.save()
+
+    return NextResponse.json(collection, { status: 200 })
+
   } catch (err) {
     console.log("[collectionId_POST]", err)
     return new NextResponse("Internal error", { status: 500 });   
