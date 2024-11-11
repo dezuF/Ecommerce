@@ -61,13 +61,13 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
       });
       if (res.ok) {
         setLoading(false);
-        toast.success('Collection ${initialData ? "updated" : "created"}');
+        toast.success(`Collection ${initialData ? "updated" : "created"}`);
         window.location.href = "/collections";
         router.push("/collections");
       }
     } catch (err) {
-      console.log("[Collections_POST]", err);
-      toast.error("Sonething went wrong! Please try again.");
+      console.log("[collections_POST]", err);
+      toast.error("Something went wrong! Please try again.");
     }
   };
 
