@@ -1,8 +1,9 @@
 import { connectToDB } from "@/lib/mongoDB";
-import { auth } from '@clerk/nextjs/server'
+import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
 import Collection from "@/lib/models/Collection";
+
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -40,6 +41,7 @@ export const POST = async (req: NextRequest) => {
     return new NextResponse("Internal Server Error", { status: 500 })
   }
 }
+
 export const GET = async (req: NextRequest) => {
   try {
     await connectToDB()
